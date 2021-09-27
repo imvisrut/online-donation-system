@@ -1,32 +1,28 @@
-import { useEffect, useState } from "react";
+import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-const Nav = () => {
-  // const [data, setData] = useState({ name: "", age: 0 });
-  const [newData, setNewData] = useState([]);
-
-  useEffect(() => {
-    console.log("Navbar is mounted..");
-    // fetch("http://localhost:5000")
-    //   .then((response) => response.json())
-    //   .then((data) => setData(data));
-
-    fetch("https://api.github.com/users/imvisrut/repos")
-      .then((response) => response.json())
-      .then((data) => setNewData(data));
-  }, []);
-
+const CustomNav = () => {
   return (
-    <nav>
-      <h1>Logo</h1>
-      <p>About</p>
-      <p>Contact</p>
-      <div className="container">
-        {newData.map((repo) => {
-          return <li>{repo.name}</li>;
-        })}
-      </div>
-    </nav>
+    <Navbar bg="dark" className="navbar-dark" expand="lg">
+      <Container>
+        <Navbar.Brand href="#home">Donate</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link href="#home">Profile</Nav.Link>
+          </Nav>
+          <Nav className="ml-auto">
+            <Link className="nav-link" to="/register">
+              Register
+            </Link>
+            <Link className="nav-link" to="/login">
+              Login
+            </Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 };
 
-export default Nav;
+export default CustomNav;
