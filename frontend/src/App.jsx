@@ -1,29 +1,27 @@
-import CustomNav from "./components/Navbar";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import React, { Component } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./store";
 
-// pages
-import Login from "./pages/Login";
+import Navbar from "./components/Navbar";
+import Landing from "./pages/Landing";
 import Register from "./pages/Register";
+import Login from "./pages/Login";
 
-const App = () => {
-  return (
-    <div className="App">
-      <Router>
-        <CustomNav />
-        <Switch>
-          <div className="container">
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/register">
-              <Register />
-            </Route>
-            <Route path="/"></Route>
+class App extends Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <Router>
+          <div className="App">
+            <Navbar />
+            <Route exact path="/" component={Landing} />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/login" component={Login} />
           </div>
-        </Switch>
-      </Router>
-    </div>
-  );
-};
-
+        </Router>
+      </Provider>
+    );
+  }
+}
 export default App;
