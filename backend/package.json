@@ -26,5 +26,10 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.13"
-  }
+  },
+  "main": "app.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
