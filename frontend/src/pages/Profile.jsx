@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Container, Card, Row, Col } from "react-bootstrap";
 
 const Profile = () => {
   const [email, setEmail] = useState("");
@@ -21,10 +22,18 @@ const Profile = () => {
   }, [email, name]);
 
   return (
-    <div>
-      <h1>Name : {name}</h1>
-      <h1>Email : {email}</h1>
-    </div>
+    <Container>
+      <Card className="text-center profile" style={{ "font-size": "2rem" }}>
+        <Row>
+          <Col>Name</Col>
+          <Col>{name}</Col>
+        </Row>
+        <Row>
+          <Col>Email</Col>
+          <Col>{email}</Col>
+        </Row>
+      </Card>
+    </Container>
   );
 };
 

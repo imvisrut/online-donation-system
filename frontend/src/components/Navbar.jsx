@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const CustomNav = ({ isLoggedIn, setIsLoggedIn, setJwtToken }) => {
   const history = useHistory();
