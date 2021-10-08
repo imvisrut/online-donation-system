@@ -7,6 +7,9 @@ import Navbar from "./components/Navbar";
 import Landing from "./pages/Landing";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import axios from "axios";
+
+axios.defaults.withCredentials = true;
 
 class App extends Component {
   render() {
