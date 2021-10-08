@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 import axios from "axios";
 
@@ -32,7 +33,10 @@ const Register = () => {
 
   return (
     <div className="container">
-      <div className="row">
+      <Helmet>
+        <title>{`${process.env.REACT_APP_SITE_TITLE} - Register`}</title>
+      </Helmet>
+      <div className="row" style={{ marginTop: "4rem" }}>
         <div className="col s8 offset-s2">
           <div className="col s12" style={{ paddingLeft: "11.250px" }}>
             <h4>

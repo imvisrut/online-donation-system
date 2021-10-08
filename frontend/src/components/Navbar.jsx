@@ -25,8 +25,13 @@ const CustomNav = ({ isLoggedIn, setIsLoggedIn, setJwtToken }) => {
     <Navbar bg="dark" className="navbar-dark" expand="lg">
       <Container>
         <Navbar.Brand>
-          <Link className="nav-link" to="/">
-            Donate
+          <Link className="nav-link" style={{ fontSize: "1.3rem" }} to="/">
+            <img
+              src="/favicon.ico"
+              alt="donation image"
+              style={{ width: "1.5rem" }}
+            />
+            DonateX
           </Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
