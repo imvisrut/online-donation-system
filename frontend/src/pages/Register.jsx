@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
-// redux
-import classnames from "classnames";
 import axios from "axios";
 
 const Register = () => {
@@ -10,7 +8,6 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
-  const [errors, setErrors] = useState({});
   const history = useHistory();
 
   const onSubmit = async (e) => {
@@ -46,7 +43,6 @@ const Register = () => {
                 type="text"
               />
               <label htmlFor="name">Name</label>
-              <span className="red-text">{errors.name}</span>
             </div>
             <div className="input-field col s12">
               <input
@@ -56,7 +52,6 @@ const Register = () => {
                 type="email"
               />
               <label htmlFor="email">Email</label>
-              <span className="red-text">{errors.email}</span>
             </div>
             <div className="input-field col s12">
               <input
@@ -66,7 +61,6 @@ const Register = () => {
                 type="password"
               />
               <label htmlFor="password">Password</label>
-              <span className="red-text">{errors.password}</span>
             </div>
             <div className="input-field col s12">
               <input
@@ -74,12 +68,8 @@ const Register = () => {
                 value={password2}
                 id="password2"
                 type="password"
-                className={classnames("", {
-                  invalid: errors.password2,
-                })}
               />
               <label htmlFor="password2">Confirm Password</label>
-              <span className="red-text">{errors.password2}</span>
             </div>
             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
               <button
