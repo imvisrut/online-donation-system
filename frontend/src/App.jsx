@@ -1,10 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { Provider } from "react-redux";
-import store from "./store";
 
 import CustomNav from "./components/Navbar";
-import Landing from "./pages/Landing";
+import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import axios from "axios";
@@ -12,17 +10,26 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 
 const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [jwtToken, setJwtToken] = useState("");
+
   return (
-    <Provider store={store}>
-      <div className="App">
-        <Router>
-          <CustomNav />
-          <Route exact path="/" component={Landing} />
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/login" component={Login} />
-        </Router>
-      </div>
-    </Provider>
+    <div className="App">
+      <Router>
+        <CustomNav
+          isLoggedIn={isLoggedIn}
+          setIsLoggedIn={setIsLoggedIn}
+          setJwtToken={setJwtToken}
+        />
+        <Route exact path="/" component={Home} />
+        <Route exact path="/register">
+          <Register isLoggedIn={isLoggedIn} />
+        </Route>
+        <Route exact path="/login">
+          <Login setIsLoggedIn={setIsLoggedIn} setJwtToken={setJwtToken} />
+        </Route>
+      </Router>
+    </div>
   );
 };
 
