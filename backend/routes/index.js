@@ -1,11 +1,20 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
+
+const User = require("../models/User");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.send({
-    name: "visrut",
-    age: 19,
+  User.find({}, function (err, users) {
+    const userMap = [];
+    users.forEach(function (user) {
+      userMap.push({
+        _id: user._id,
+        name: user.name,
+      });
+    });
+
+    res.send(userMap);
   });
 });
 

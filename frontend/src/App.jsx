@@ -22,7 +22,9 @@ const App = () => {
           setIsLoggedIn={setIsLoggedIn}
           setJwtToken={setJwtToken}
         />
-        <Route exact path="/" component={Home} />
+        <Route exact path="/">
+          <Home isLoggedIn={isLoggedIn} />
+        </Route>
         <Route exact path="/profile">
           <Profile />
         </Route>

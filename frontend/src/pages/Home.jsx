@@ -1,8 +1,11 @@
-const Home = () => {
+import _Home from "./_Home.jsx";
+import _HomeAuth from "./_HomeAuth.jsx";
+
+const Home = ({ isLoggedIn }) => {
   return (
     <div>
-      <h1>Landing Page</h1>
-      <p>land it here...</p>
+      {!isLoggedIn && <_Home />}
+      {isLoggedIn && <_HomeAuth />}
     </div>
   );
 };
