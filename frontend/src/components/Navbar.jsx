@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -10,6 +11,15 @@ const CustomNav = ({ isLoggedIn, setIsLoggedIn, setJwtToken }) => {
     setJwtToken("");
     history.push("/login");
   };
+
+  useEffect(() => {
+    console.log("Navbar mouted...");
+    const jwtToken = localStorage.getItem("jwtToken");
+    if (jwtToken != null) {
+      setIsLoggedIn(true);
+      setJwtToken(jwtToken);
+    }
+  }, []);
 
   return (
     <Navbar bg="dark" className="navbar-dark" expand="lg">

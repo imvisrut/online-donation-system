@@ -17,6 +17,7 @@ const Login = ({ setIsLoggedIn, setJwtToken }) => {
     if (res.status === 200) {
       setIsLoggedIn(true);
       setJwtToken(res.data.token);
+      localStorage.setItem("jwtToken", res.data.token);
     }
     history.push("/profile");
   };
