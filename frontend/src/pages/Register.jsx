@@ -9,6 +9,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
+  const [errors, setErrors] = useState({});
   const history = useHistory();
 
   const onSubmit = async (e) => {
@@ -20,8 +21,13 @@ const Register = () => {
       password: password,
       password2: password2,
     };
-    await axios.post("/api/users/register", newUser);
-    history.push("/login");
+
+    try {
+      await axios.post("/api/users/register", newUser);
+    } catch (err) {
+      setErrors(err.response.data);
+    }
+    // history.push("/login");
   };
 
   return (
@@ -45,6 +51,10 @@ const Register = () => {
                 type="text"
               />
               <label htmlFor="name">Name</label>
+              <span className="red-text">
+                {errors.name}
+                {errors.emailnotfound}
+              </span>
             </div>
             <div className="input-field col s12">
               <input
@@ -54,6 +64,10 @@ const Register = () => {
                 type="email"
               />
               <label htmlFor="email">Email</label>
+              <span className="red-text">
+                {errors.email}
+                {errors.emailnotfound}
+              </span>
             </div>
             <div className="input-field col s12">
               <input
@@ -63,6 +77,7 @@ const Register = () => {
                 type="text"
               />
               <label htmlFor="email">About</label>
+              <span className="red-text">{errors.about}</span>
             </div>
             <div className="input-field col s12">
               <input
@@ -72,6 +87,7 @@ const Register = () => {
                 type="password"
               />
               <label htmlFor="password">Password</label>
+              <span className="red-text">{errors.password}</span>
             </div>
             <div className="input-field col s12">
               <input
@@ -81,6 +97,7 @@ const Register = () => {
                 type="password"
               />
               <label htmlFor="password2">Confirm Password</label>
+              <span className="red-text">{errors.password2}</span>
             </div>
             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
               <button
