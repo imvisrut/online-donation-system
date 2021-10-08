@@ -24,10 +24,10 @@ const Register = () => {
 
     try {
       await axios.post("/api/users/register", newUser);
+      history.push("/login");
     } catch (err) {
       setErrors(err.response.data);
     }
-    // history.push("/login");
   };
 
   return (

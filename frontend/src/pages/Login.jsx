@@ -5,6 +5,7 @@ import axios from "axios";
 const Login = ({ setIsLoggedIn, setJwtToken }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
   const history = useHistory();
 
   const onSubmit = async (e) => {
@@ -13,13 +14,18 @@ const Login = ({ setIsLoggedIn, setJwtToken }) => {
       email,
       password,
     };
-    const res = await axios.post("/api/users/login", userData);
-    if (res.status === 200) {
-      setIsLoggedIn(true);
-      setJwtToken(res.data.token);
-      localStorage.setItem("jwtToken", res.data.token);
+    try {
+      const res = await axios.post("/api/users/login", userData);
+      if (res.status === 200) {
+        setIsLoggedIn(true);
+        setJwtToken(res.data.token);
+        localStorage.setItem("jwtToken", res.data.token);
+      }
+      history.push("/profile");
+    } catch (err) {
+      console.log(err.response);
+      setErrors(err.response.data);
     }
-    history.push("/profile");
   };
 
   return (
@@ -43,6 +49,10 @@ const Login = ({ setIsLoggedIn, setJwtToken }) => {
                 type="email"
               />
               <label htmlFor="email">Email</label>
+              <span className="red-text">
+                {errors.email}
+                {errors.emailnotfound}
+              </span>
             </div>
             <div className="input-field col s12">
               <input
@@ -52,6 +62,10 @@ const Login = ({ setIsLoggedIn, setJwtToken }) => {
                 type="password"
               />
               <label htmlFor="password">Password</label>
+              <span className="red-text">
+                {errors.password}
+                {errors.passwordincorrect}
+              </span>
             </div>
             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
               <button
