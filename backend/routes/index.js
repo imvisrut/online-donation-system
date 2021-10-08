@@ -4,31 +4,40 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../models/User");
 
-/* GET home page. */
+// return all users expect loggedin one
 router.get("/", function (req, res, next) {
-  // Get singal user
+  // if user is not authorized return forbidden
+  if (!req.headers.authorization) {
+    return res.send({ message: "You are not authorized" });
+  }
+
   const usertoken = req.headers.authorization;
+
   const token = usertoken.split(" ");
-  console.log(usertoken);
 
-  // here "secret" is specified in config/keys.js
-  const decoded = jwt.verify(token[1], "secret");
+  try {
+    const decoded = jwt.verify(token[1], "secret");
 
-  const currentUserId = decoded.id;
-  console.log(currentUserId);
+    const currentUserId = decoded.id;
+    console.log(currentUserId);
 
-  User.find({}, function (err, users) {
-    const userMap = [];
-    users.forEach(function (user) {
-      if (user._id != currentUserId) {
-        userMap.push({
-          _id: user._id,
-          name: user.name,
-        });
-      }
+    User.find({}, function (err, users) {
+      const userMap = [];
+      users.forEach(function (user) {
+        if (user._id != currentUserId) {
+          userMap.push({
+            _id: user._id,
+            name: user.name,
+            about: user.about,
+          });
+        }
+      });
+      res.send(userMap);
     });
-    res.send(userMap);
-  });
+  } catch (err) {
+    res.status(403);
+    res.json({ error: "You are not authorized." });
+  }
 });
 
 module.exports = router;

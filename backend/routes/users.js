@@ -102,14 +102,19 @@ router.get("/get-info", (req, res) => {
   const usertoken = req.headers.authorization;
   const token = usertoken.split(" ");
 
-  // here "secret" is specified in config/keys.js
-  const decoded = jwt.verify(token[1], "secret");
+  try {
+    // here "secret" is specified in config/keys.js
+    const decoded = jwt.verify(token[1], "secret");
 
-  const userId = decoded.id;
-  User.findOne({ _id: userId }).then((user) => {
-    return res.json({ user });
-  });
-  return res.status(200);
+    const userId = decoded.id;
+    User.findOne({ _id: userId }).then((user) => {
+      return res.json({ user });
+    });
+    return res.status(200);
+  } catch (err) {
+    res.status(403);
+    res.json({ error: "You are not authorized." });
+  }
 });
 
 module.exports = router;
