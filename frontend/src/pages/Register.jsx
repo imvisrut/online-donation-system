@@ -5,6 +5,7 @@ import axios from "axios";
 
 const Register = () => {
   const [name, setName] = useState("");
+  const [about, setAbout] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
@@ -15,6 +16,7 @@ const Register = () => {
     const newUser = {
       name: name,
       email: email,
+      about: about,
       password: password,
       password2: password2,
     };
@@ -52,6 +54,15 @@ const Register = () => {
                 type="email"
               />
               <label htmlFor="email">Email</label>
+            </div>
+            <div className="input-field col s12">
+              <input
+                onChange={(e) => setAbout(e.target.value)}
+                value={about}
+                id="about"
+                type="text"
+              />
+              <label htmlFor="email">About</label>
             </div>
             <div className="input-field col s12">
               <input

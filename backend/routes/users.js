@@ -4,9 +4,11 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../config/keys");
+
 // Load input validation
 const validateRegisterInput = require("../validation/register");
 const validateLoginInput = require("../validation/login");
+
 // Load User model
 const User = require("../models/User");
 
@@ -31,6 +33,7 @@ router.post("/register", function (req, res, next) {
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
+        about: req.body.about,
       });
 
       // hash the password before saving in database
@@ -98,11 +101,9 @@ router.post("/login", (req, res, next) => {
 router.get("/get-info", (req, res) => {
   const usertoken = req.headers.authorization;
   const token = usertoken.split(" ");
-  console.log(req.headers);
 
   // here "secret" is specified in config/keys.js
   const decoded = jwt.verify(token[1], "secret");
-  console.log(decoded);
 
   const userId = decoded.id;
   User.findOne({ _id: userId }).then((user) => {

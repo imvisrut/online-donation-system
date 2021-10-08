@@ -4,8 +4,12 @@ import axios from "axios";
 const _HomeAuth = () => {
   const [users, setUsers] = useState([]);
   useEffect(() => {
+    const jwtToken = localStorage.getItem("jwtToken");
+
     async function setUserList() {
-      const res = await axios.get("/api/users/");
+      const res = await axios.get("/api/users/", {
+        headers: { authorization: `${jwtToken}` },
+      });
       setUsers(res.data);
     }
 
