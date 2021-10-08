@@ -11,20 +11,19 @@ import axios from "axios";
 
 axios.defaults.withCredentials = true;
 
-class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
+const App = () => {
+  return (
+    <Provider store={store}>
+      <div className="App">
+        <Navbar />
         <Router>
-          <div className="App">
-            <Navbar />
-            <Route exact path="/" component={Landing} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={Login} />
-          </div>
+          <Route exact path="/" component={Landing} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/login" component={Login} />
         </Router>
-      </Provider>
-    );
-  }
-}
+      </div>
+    </Provider>
+  );
+};
+
 export default App;
