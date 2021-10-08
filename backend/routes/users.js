@@ -48,7 +48,7 @@ router.post("/register", function (req, res, next) {
   });
 });
 
-router.post("/login", (req, res) => {
+router.post("/login", (req, res, next) => {
   // Form validation
   const { errors, isValid } = validateLoginInput(req.body);
   // Check validation
@@ -93,6 +93,22 @@ router.post("/login", (req, res) => {
       }
     });
   });
+});
+
+router.get("/get-info", (req, res) => {
+  const usertoken = req.headers.authorization;
+  const token = usertoken.split(" ");
+  console.log(req.headers);
+
+  // here "secret" is specified in config/keys.js
+  const decoded = jwt.verify(token[1], "secret");
+  console.log(decoded);
+
+  const userId = decoded.id;
+  User.findOne({ _id: userId }).then((user) => {
+    return res.json({ user });
+  });
+  return res.status(200);
 });
 
 module.exports = router;

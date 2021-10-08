@@ -9,6 +9,7 @@ const CustomNav = ({ isLoggedIn, setIsLoggedIn, setJwtToken }) => {
   const logoutHandler = () => {
     setIsLoggedIn(false);
     setJwtToken("");
+    localStorage.removeItem("jwtToken");
     history.push("/login");
   };
 

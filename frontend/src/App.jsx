@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import CustomNav from "./components/Navbar";
 import Home from "./pages/Home";
+import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import axios from "axios";
@@ -22,6 +23,9 @@ const App = () => {
           setJwtToken={setJwtToken}
         />
         <Route exact path="/" component={Home} />
+        <Route exact path="/profile">
+          <Profile />
+        </Route>
         <Route exact path="/register">
           <Register isLoggedIn={isLoggedIn} />
         </Route>
