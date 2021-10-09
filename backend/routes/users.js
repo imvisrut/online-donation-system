@@ -5,6 +5,12 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../config/keys");
 
+// env variables
+const { config } = require("dotenv");
+config();
+
+const stripe = require("stripe")(process.env.STRIPE_SECRET);
+
 // Load input validation
 const validateRegisterInput = require("../validation/register");
 const validateLoginInput = require("../validation/login");
@@ -29,24 +35,33 @@ router.post("/register", function (req, res, next) {
         .status(StatusCodes.BAD_REQUEST)
         .json({ email: "Email already exist" });
     } else {
-      const newUser = new User({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        about: req.body.about,
-      });
+      stripe.customers
+        .create({
+          name: req.body.name,
+          email: req.body.email,
+          description: req.body.about,
+        })
+        .then((customer) => {
+          const newUser = new User({
+            name: req.body.name,
+            email: req.body.email,
+            password: req.body.password,
+            about: req.body.about,
+            stripeId: customer.id,
+          });
 
-      // hash the password before saving in database
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, (err, hash) => {
-          if (err) throw err;
-          newUser.password = hash;
-          newUser
-            .save()
-            .then((user) => res.json(user))
-            .catch((err) => console.log(err));
+          // hash the password before saving in database
+          bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(newUser.password, salt, (err, hash) => {
+              if (err) throw err;
+              newUser.password = hash;
+              newUser
+                .save()
+                .then((user) => res.json(user))
+                .catch((err) => console.log(err));
+            });
+          });
         });
-      });
     }
   });
 });

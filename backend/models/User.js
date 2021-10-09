@@ -18,6 +18,9 @@ const UserSchema = new Schema({
   about: {
     type: String,
   },
+  stripeId: {
+    type: String,
+  },
   date: {
     type: Date,
     default: Date.now,

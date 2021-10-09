@@ -13,11 +13,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
-.background-img {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  width: 100vw;
-  z-index: -1;
-}
