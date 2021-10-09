@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Container, Card } from "react-bootstrap";
 import axios from "axios";
 
 const _HomeAuth = () => {
@@ -16,12 +17,18 @@ const _HomeAuth = () => {
     setUserList();
   }, []);
   return (
-    <div>
-      <h1>Peoples</h1>
+    <Container>
       {users.map((user) => {
-        return <p key={user._id}>{user.name}</p>;
+        return (
+          <Card key={user._id}>
+            <Card.Title>
+              <h1>{user.name}</h1>
+            </Card.Title>
+            <Card.Body>{user.about}</Card.Body>
+          </Card>
+        );
       })}
-    </div>
+    </Container>
   );
 };
 
