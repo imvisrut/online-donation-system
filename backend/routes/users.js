@@ -108,7 +108,7 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-router.get("/get-info", (req, res) => {
+router.get("/get-info", async (req, res) => {
   const usertoken = req.headers.authorization;
   const token = usertoken.split(" ");
 
@@ -117,11 +117,13 @@ router.get("/get-info", (req, res) => {
     const decoded = jwt.verify(token[1], "secret");
 
     const userId = decoded.id;
-    User.findOne({ _id: userId }).then((user) => {
-      return res.json({ user });
-    });
+
+    const user = await User.findOne({ _id: userId });
+    const customer = await stripe.customers.retrieve(user.stripeId);
+    res.json({ user, customer });
     return res.status(200);
   } catch (err) {
+    console.log(err);
     res.status(403);
     res.json({ error: "You are not authorized." });
   }
