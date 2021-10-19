@@ -12,14 +12,11 @@ router.get("/", function (req, res, next) {
   }
 
   const usertoken = req.headers.authorization;
-
   const token = usertoken.split(" ");
 
   try {
     const decoded = jwt.verify(token[1], "secret");
-
     const currentUserId = decoded.id;
-    console.log(currentUserId);
 
     User.find({}, function (err, users) {
       const userMap = [];

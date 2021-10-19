@@ -50,6 +50,9 @@ const CustomNav = ({ isLoggedIn, setIsLoggedIn, setJwtToken }) => {
 
           {isLoggedIn && (
             <Nav className="ml-auto">
+              <Link className="nav-link" to="/add-balance">
+                Add Balance
+              </Link>
               <Link className="nav-link" to="/profile">
                 Profile
               </Link>

@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 
 const usersRouter = require("./routes/users");
 const indexRouter = require("./routes/index");
+const paymentRouter = require("./routes/payments");
 
 var app = express();
 app.use(cors());
@@ -36,6 +37,7 @@ require("./config/passport")(passport);
 
 app.use("/api/users", usersRouter);
 app.use("/api/users", indexRouter);
+app.use("/api/stripe", paymentRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

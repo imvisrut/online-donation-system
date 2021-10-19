@@ -5,11 +5,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../config/keys");
 
-// env variables
-const { config } = require("dotenv");
-config();
-
-const stripe = require("stripe")(process.env.STRIPE_SECRET);
+const stripe = require("./stripe");
 
 // Load input validation
 const validateRegisterInput = require("../validation/register");
