@@ -17,9 +17,7 @@ import "./style/App.scss";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
-const stripePromise = loadStripe(
-  "pk_test_51JFzh4SBp2AuOLnEOgo3hRVMfu8th3qoiGlgdPAUg8TM1TXKFmDnVE1L2ja8RMc8fqlGnED83nhmAT9RQjVOmmbz00CJdAe40t"
-);
+const stripePromise = loadStripe(process.env.REACT_APP_PUBLIC_KEY);
 
 axios.defaults.withCredentials = true;
 

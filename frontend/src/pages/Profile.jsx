@@ -9,7 +9,7 @@ const Profile = () => {
   const [balance, setBalance] = useState("");
 
   const formatCurrency = (num) => {
-    return "₹" + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    return "$" + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
   };
 
   useEffect(() => {
