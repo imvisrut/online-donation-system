@@ -11,13 +11,6 @@ async function createPaymentIntent(amount, description, customerId) {
       customer: customerId,
       currency: "USD",
     });
-
-    // update balance in stripe account
-    stripe.customers.createBalanceTransaction(customerId, {
-      amount,
-      currency: "usd",
-    });
-
     return paymentIntent;
   } catch (err) {
     console.log(err);
@@ -44,5 +37,20 @@ router.post(
     );
   })
 );
+
+// add money to customer account
+router.post("/add-money", (req, res) => {
+  const amount = req.body.amount - req.body.amount * 0.05;
+  const customerId = req.body.customer;
+  const currency = req.body.currency;
+
+  // update balance in stripe account
+  stripe.customers.createBalanceTransaction(customerId, {
+    amount,
+    currency,
+  });
+
+  res.sendStatus(200);
+});
 
 module.exports = router;

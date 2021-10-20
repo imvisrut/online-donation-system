@@ -24,7 +24,6 @@ const AddBalance = () => {
         customerId: customer.id,
       },
     });
-    console.log(pi);
     setPaymentIntent(pi);
   };
 
@@ -60,6 +59,8 @@ const AddBalance = () => {
       console.log(error);
       error.payment_intent && setPaymentIntent(error.payment_intent);
     } else {
+      // send post request to add money into customer account
+      await axios.post("/api/stripe/add-money", paymentIntent);
       setPaymentIntent(updatedPaymentIntent);
     }
   };

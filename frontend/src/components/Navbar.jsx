@@ -19,7 +19,7 @@ const CustomNav = ({ isLoggedIn, setIsLoggedIn, setJwtToken }) => {
       setIsLoggedIn(true);
       setJwtToken(jwtToken);
     }
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <Navbar bg="dark" className="navbar-dark" expand="lg">

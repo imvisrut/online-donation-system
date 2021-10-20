@@ -13,21 +13,23 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    const jwtToken = localStorage.getItem("jwtToken");
-    async function getUser() {
-      const res = await axios.get("/api/users/get-info", {
-        headers: { authorization: `${jwtToken}` },
-      });
-      if (res.status === 200) {
-        setEmail(res.data.user.email);
-        setName(res.data.user.name);
-        setAbout(res.data.user.about);
-        setBalance(formatCurrency(res.data.customer.balance / 100));
+    if (email === "" || name === "" || about === "" || balance == "") {
+      const jwtToken = localStorage.getItem("jwtToken");
+      async function getUser() {
+        const res = await axios.get("/api/users/get-info", {
+          headers: { authorization: `${jwtToken}` },
+        });
+        if (res.status === 200) {
+          setEmail(res.data.user.email);
+          setName(res.data.user.name);
+          setAbout(res.data.user.about);
+          setBalance(formatCurrency(res.data.customer.balance / 100));
+        }
       }
-    }
 
-    getUser();
-  }, [email, name]);
+      getUser();
+    }
+  }, [email, name, about, balance]);
 
   return (
     <Container>
