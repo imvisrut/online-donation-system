@@ -24,6 +24,7 @@ router.get("/", function (req, res, next) {
         if (user._id != currentUserId) {
           userMap.push({
             _id: user._id,
+            customerId: user.stripeId,
             name: user.name,
             about: user.about,
           });

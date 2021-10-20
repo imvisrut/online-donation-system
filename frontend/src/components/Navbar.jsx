@@ -13,7 +13,6 @@ const CustomNav = ({ isLoggedIn, setIsLoggedIn, setJwtToken }) => {
   };
 
   useEffect(() => {
-    console.log("Navbar mouted...");
     const jwtToken = localStorage.getItem("jwtToken");
     if (jwtToken != null) {
       setIsLoggedIn(true);

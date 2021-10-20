@@ -53,4 +53,30 @@ router.post("/add-money", (req, res) => {
   res.sendStatus(200);
 });
 
+// transfer money from one customer to another
+
+router.post("/transfer-money", (req, res) => {
+  const amount = req.body.amount - req.body.amount * 0.05;
+  const receiverId = req.body.receiver_id;
+  const senderId = req.body.sender_id;
+  const currency = "usd";
+  // console.log(
+  //   `amount : ${amount}, receiverId : ${receiverId}, senderId : ${senderId}, currency : ${currency}`
+  // );
+
+  // update balance in stripe account
+
+  // add money into receiverId
+  stripe.customers.createBalanceTransaction(receiverId, {
+    amount: amount * 100,
+    currency,
+  });
+
+  // cut money from senderId
+  stripe.customers.createBalanceTransaction(senderId, {
+    amount: -100 * amount,
+    currency,
+  });
+});
+
 module.exports = router;
