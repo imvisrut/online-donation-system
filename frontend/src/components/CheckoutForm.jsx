@@ -3,14 +3,8 @@
 // https://www.stripe.com/docs/payments/integration-builder
 
 import React, { useState } from "react";
-import { loadStripe } from "@stripe/stripe-js";
-import {
-  CardElement,
-  Elements,
-  useElements,
-  useStripe,
-} from "@stripe/react-stripe-js";
-import "./styles.css";
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import axios from "axios";
 
 const CARD_OPTIONS = {
   iconStyle: "solid",
@@ -57,7 +51,7 @@ const Field = ({
       {label}
     </label>
     <input
-      className="FormRowInput"
+      className="FormRowInput mb-3"
       id={id}
       type={type}
       placeholder={placeholder}
@@ -71,7 +65,9 @@ const Field = ({
 
 const SubmitButton = ({ processing, error, children, disabled }) => (
   <button
-    className={`SubmitButton ${error ? "SubmitButton--error" : ""}`}
+    className={`SubmitButton ${
+      error ? "SubmitButton--error" : ""
+    } btn btn-success mt-5`}
     type="submit"
     disabled={processing || disabled}
   >
@@ -106,7 +102,9 @@ const ResetButton = ({ onClick }) => (
   </button>
 );
 
-const CheckoutForm = () => {
+// -----------------------------------    checkout form  --------------------------------------
+
+const CheckoutForm = ({ amount, customerId }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState(null);
@@ -163,6 +161,10 @@ const CheckoutForm = () => {
     });
   };
 
+  if (paymentMethod) {
+    axios.post("api/stripe/payments", { customerId, amount });
+  }
+
   return paymentMethod ? (
     <div className="Result">
       <div className="ResultTitle" role="alert">
@@ -214,7 +216,7 @@ const CheckoutForm = () => {
           }}
         />
       </fieldset>
-      <fieldset className="FormGroup">
+      <fieldset className="FormGroup mt-3">
         <CardField
           onChange={(e) => {
             setError(e.error);
@@ -224,7 +226,7 @@ const CheckoutForm = () => {
       </fieldset>
       {error && <ErrorMessage>{error.message}</ErrorMessage>}
       <SubmitButton processing={processing} error={error} disabled={!stripe}>
-        Pay $25
+        Pay ${amount}
       </SubmitButton>
     </form>
   );
