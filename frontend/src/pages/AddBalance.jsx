@@ -11,6 +11,7 @@ const AddBalance = () => {
   const [amount, setAmount] = useState(0);
   const [paymentIntent, setPaymentIntent] = useState();
   const [customer, setCustomer] = useState({});
+  const [isLoadingBtn, setIsLoadingBtn] = useState(false);
 
   const createPaymentIntent = async (event) => {
     const validAmount = Math.min(Math.max(amount, 50), 9999999);
@@ -42,6 +43,7 @@ const AddBalance = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoadingBtn(true);
 
     const cardElement = elements.getElement(CardElement);
 
@@ -54,8 +56,9 @@ const AddBalance = () => {
         },
       });
 
+    setIsLoadingBtn(false);
+
     if (error) {
-      console.log("hello");
       console.log(error);
       error.payment_intent && setPaymentIntent(error.payment_intent);
     } else {
@@ -93,9 +96,26 @@ const AddBalance = () => {
         >
           <CardElement />
         </div>
-        <button type="submit" className="btn btn-success my-3">
-          Pay
-        </button>
+        {!isLoadingBtn && (
+          <button type="submit" className="btn btn-success my-3">
+            Pay
+          </button>
+        )}
+        {isLoadingBtn && (
+          <button
+            class="btn my-3"
+            type="button"
+            disabled
+            style={{ backgroundColor: "#64ab75", color: "white" }}
+          >
+            <span
+              class="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+            &nbsp;&nbsp;Pay
+          </button>
+        )}
       </form>
     </Container>
   );
