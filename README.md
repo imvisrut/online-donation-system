@@ -1,4 +1,4 @@
-# online-donation-system
+# Online-Donation-System
 
 ## TO use checkout set account or business name in below link
 
